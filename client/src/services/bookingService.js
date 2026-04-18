@@ -5,9 +5,11 @@ const db = getFirestore(app);
 
 export const addBooking = async (data) => {
   try {
-    await addDoc(collection(db, "bookings"), data);
-    console.log("Booking stored!");
+    const docRef = await addDoc(collection(db, "bookings"), data);
+    console.log("Document written with ID:", docRef.id);
+    return docRef;
   } catch (error) {
-    console.error(error);
+    console.error("Error adding document:", error);
+    throw error;
   }
 };
