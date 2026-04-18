@@ -1,27 +1,23 @@
-import BookingForm from "./components/BookingForm";
-import { addBooking } from "./services/bookingService";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProviderLayout from "./components/ProviderLayout";
+import LandingPage from "./pages/LandingPage";
+import CategoryPage from "./pages/CategoryPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
-  const testBooking = () => {
-    addBooking({
-      name: "Test User",
-      email: "test@gmail.com",
-      service: "Web Dev",
-      provider: "John",
-      message: "Test booking"
-    });
-  };
-
   return (
-    <div>
-      <h1>BrandHive</h1>
-
-      {/* Teammate test button */}
-      <button onClick={testBooking}>Test Booking</button>
-
-      {/* Your booking form */}
-      <BookingForm service="Web Development" />
-    </div>
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<ProviderLayout />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/categories" element={<CategoryPage />} />
+          <Route path="/category/:id" element={<CategoryPage />} />
+          <Route path="/provider/:id" element={<ServiceDetailPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
