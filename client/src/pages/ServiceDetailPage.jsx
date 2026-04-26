@@ -4,11 +4,13 @@ import { ArrowLeft, Star, MapPin, Clock, CheckCircle2, Shield, Share2, Heart } f
 import Button from "../components/Button";
 import BookingModal from "../components/BookingModal";
 import { providers } from "../data/mockData";
+import { useAuth } from "../context/AuthContext";
 
 export default function ServiceDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { currentUser, openAuthModal } = useAuth();
   
   const provider = providers.find(p => p.id === id);
 
@@ -144,7 +146,13 @@ export default function ServiceDetailPage() {
             <Button 
               size="lg" 
               className="w-full text-lg shadow-brand-500/20"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                if (currentUser) {
+                  setIsModalOpen(true);
+                } else {
+                  openAuthModal();
+                }
+              }}
             >
               Book Service
             </Button>

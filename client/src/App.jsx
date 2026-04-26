@@ -4,10 +4,14 @@ import LandingPage from "./pages/LandingPage";
 import CategoryPage from "./pages/CategoryPage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
 import ScrollToTop from "./components/ScrollToTop";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import AuthModal from "./components/AuthModal";
 
-function App() {
+function AppContent() {
+  const { isAuthModalOpen, closeAuthModal } = useAuth();
+  
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <Routes>
         <Route element={<ProviderLayout />}>
@@ -17,7 +21,18 @@ function App() {
           <Route path="/provider/:id" element={<ServiceDetailPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+      <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
