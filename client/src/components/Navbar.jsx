@@ -1,21 +1,11 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Hexagon, Search, Menu, LogOut, User } from "lucide-react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, logout } from "../firebase/auth";
+import { logout } from "../firebase/auth";
 import Button from "./Button";
-import AuthModal from "./AuthModal";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
+  const { currentUser, openAuthModal } = useAuth();
 
   return (
     <>
@@ -65,8 +55,8 @@ export default function Navbar() {
                 </div>
               ) : (
                 <>
-                  <Button variant="ghost" size="sm" onClick={() => setIsAuthOpen(true)}>Log in</Button>
-                  <Button variant="primary" size="sm" onClick={() => setIsAuthOpen(true)}>Join as Provider</Button>
+                  <Button variant="ghost" size="sm" onClick={openAuthModal}>Log in</Button>
+                  <Button variant="primary" size="sm" onClick={openAuthModal}>Join as Provider</Button>
                 </>
               )}
             </div>
@@ -80,8 +70,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      
-      <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
     </>
   );
 }
