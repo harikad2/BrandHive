@@ -1,11 +1,13 @@
 import { initializeApp } from "firebase/app";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBA8pfJa9tnLM7mMAgLJP7zYTmtOpsMdoY",
-  authDomain: "brandhive-e94e2.firebaseapp.com",
-  projectId: "brandhive-e94e2",
-  storageBucket: "brandhive-e94e2.firebasestorage.app",
-  messagingSenderId: "562640141926",
-  appId: "1:562640141926:web:0b4031b6b4c742289377a7",
-  measurementId: "G-P2MGXMLZL7"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
+
 export const app = initializeApp(firebaseConfig);
